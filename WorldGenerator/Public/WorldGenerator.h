@@ -23,6 +23,4 @@ public:
 	void GenerateMap(FString InTexturePath);
 	bool Exec(UWorld* InWorld, const TCHAR* Cmd, FOutputDevice& Ar);
 	void SpawnActorOnColor(FColor InColor, int32 InX, int32 InY);
-	TArray<UObject*> ImportAsset(const TArray<FString>& Files);
-
 };
