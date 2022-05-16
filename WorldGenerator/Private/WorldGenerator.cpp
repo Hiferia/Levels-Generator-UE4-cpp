@@ -78,17 +78,6 @@ bool FWorldGeneratorModule::Exec(UWorld* InWorld, const TCHAR* Cmd, FOutputDevic
 	if (FParse::Command(&Cmd, TEXT("GenerateWorld")))
 	{
 		FString TexturePath = FParse::Token(Cmd, true);
-		//UPluginSettings* PluginSettings = GetMutableDefault<UPluginSetting>();
-		//DefaultFloor = LoadObject<UBlueprint>(nullptr, *FString("Blueprint'/Game/Content/Bomberman/DefaultFloor.DefaultFloor'"));
-		//DefaultWall = LoadObject<UBlueprint>(nullptr, *FString("Blueprint'/Game/Content/Bomberman/DefaultWall.DefaultWall'"));
-		//DestructibleWall = LoadObject<UBlueprint>(nullptr, *FString("Blueprint'/Game/Content/Bomberman/DestructibleWall.DestructibleWall'"));
-		//DefaultFloor = LoadObject<UBlueprint>(nullptr, TEXT("C:/Users/luigi/Desktop/UE4 projects/NetworkingProj/Content/Bomberman/DefaultFloor.uasset"));
-		//DefaultWall = LoadObject<UBlueprint>(nullptr, TEXT("C:/Users/luigi/Desktop/UE4 projects/NetworkingProj/Content/Bomberman/DefaultWall.uasset"));
-		//DestructibleWall = LoadObject<UBlueprint>(nullptr, TEXT("C:/Users/luigi/Desktop/UE4 projects/NetworkingProj/Content/Bomberman/DestructibleWall.uasset"));
-		/*DefaultFloor = LoadObject<UBlueprint>(nullptr, TEXT("/Game/Content/Bomberman/DefaultFloor.DefaultFloor_C"));
-		DefaultWall = LoadObject<UBlueprint>(nullptr, TEXT("/Game/Content/Bomberman/DefaultWall.DefaultWall_C"));
-		DestructibleWall = LoadObject<UBlueprint>(nullptr, TEXT("/Game/Content/Bomberman/DestructibleWall.DestructibleWall_C"));*/
-
 		if (TexturePath == "All")
 		{
 			const FString& TexturesPath = FString("C:/Users/luigi/Desktop/Maps");
@@ -105,29 +94,10 @@ bool FWorldGeneratorModule::Exec(UWorld* InWorld, const TCHAR* Cmd, FOutputDevic
 		{
 			GenerateMap(TexturePath);
 		}
-
-		UE_LOG(LogTemp, Error, TEXT("loading DONE!"));
-
 		return true;
 	}
 	return false;
 }
-
-//void FWorldGeneratorModule::SpawnActorOnColor(FColor InColor, int32 InX, int32 InY)
-//{
-//	FVector Offset = FVector(100, 100, 0);
-//
-//	if (InColor.R == 255)
-//	{
-//		AStaticMeshActor* Wall = MyWorld->SpawnActor<AStaticMeshActor>(DestructibleWall->GeneratedClass);
-//		Wall->SetActorLocation(FVector(InX, InY, 0) * Offset);
-//	}
-//	else if (InColor.G == 255)
-//	{
-//		AStaticMeshActor* Wall = MyWorld->SpawnActor<AStaticMeshActor>(DefaultWall->GeneratedClass);
-//		Wall->SetActorLocation(FVector(InX, InY, 0) * Offset);
-//	}
-//}
 void FWorldGeneratorModule::SpawnActorOnColor(FColor InColor, int32 InX, int32 InY)
 {
 	InX /= PixelsNumber * Mul;
@@ -149,29 +119,6 @@ void FWorldGeneratorModule::SpawnActorOnColor(FColor InColor, int32 InX, int32 I
 		MyActor->GetStaticMeshComponent()->SetStaticMesh(StaticMesh);
 	}
 }
-
-TArray<UObject*> FWorldGeneratorModule::ImportAsset(const TArray<FString>& Files)
-{
-	UAutomatedAssetImportData* NewTexture = NewObject<UAutomatedAssetImportData>();
-	NewTexture->DestinationPath = TEXT("/Game/Assets/Textures");
-	NewTexture->Filenames = Files;
-	NewTexture->bReplaceExisting = true;
-
-	FAssetToolsModule& AssetTools = FModuleManager::GetModuleChecked<FAssetToolsModule>("AssetTools");
-	TArray<UObject*>ImportedAssets = AssetTools.Get().ImportAssetsAutomated(NewTexture);
-
-	for (UObject* Obj : ImportedAssets)
-	{
-		UPackage* Package = Obj->GetPackage();
-		FString FileName = FPackageName::LongPackageNameToFilename(Package->GetPathName(), FPackageName::GetAssetPackageExtension());
-
-		UPackage::SavePackage(Package, Obj, RF_Public | RF_Standalone, *FileName);
-		FAssetRegistryModule::AssetCreated(Obj);
-	}
-
-	return ImportedAssets;
-}
-
 #undef LOCTEXT_NAMESPACE
 
 IMPLEMENT_MODULE(FWorldGeneratorModule, WorldGenerator)
