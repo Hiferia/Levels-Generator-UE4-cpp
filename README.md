@@ -14,7 +14,7 @@ I used two different colors to create to different meshes inside the level gener
 ![test640x640](https://user-images.githubusercontent.com/76873511/174310848-e117a0c6-c746-464e-898f-089481a73364.png)
 
 ## Bomberman example
-Here's I used my plugin to create the level and, after that, I used the blueprints to create a simple demo of Bomberman making the red walls destructibles and the white walls not desctructibles.
+Here I used my plugin to create the level and, after that, I used the blueprints to create a simple demo of Bomberman making the red walls destructibles and the white walls not desctructibles.
 
 
 https://user-images.githubusercontent.com/76873511/174311921-408bd746-1c90-4c8d-9d07-bd702dbfce96.mp4
